@@ -345,12 +345,12 @@ btn = tk.Button(
     root,
     text="Start Action",
     font=("Arial", 15, "bold"), 
-    background="#C0C0C0", 
+    background="#0C7AC4", 
     foreground="black", 
     command=click, 
     cursor="hand2",
-    activebackground="#000000",
-    activeforeground="#FFFAFA",
+    activebackground="#ADFF2F",
+    activeforeground="#000000",
     relief="flat",
     bd=5
     )

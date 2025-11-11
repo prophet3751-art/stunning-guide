@@ -25,7 +25,6 @@ heroes_label = tk.Label(heroes_frame, text="Heroes HP:", foreground="green", fon
 heroes_label.pack(fill=tk.X, anchor="center")
 heroes_frame.pack(pady=10, fill=tk.X)
 
-
 # Enemy frame===============================
 enemies_frame = tk.Frame(root)
 enemies_frame.configure(background="floralwhite")

@@ -56,9 +56,9 @@ class Character:
 player = Character("Hero", 100, 20, 150, 200, GREEN)
 enemy = Character("Orc", 100, 15, 400, 200, RED)
 
-# Лог действий
-log = []
-
+# Лог действий 
+log = [] 
+ 
 # Кнопки
 attack_button = pygame.Rect(50, 300, 100, 50)
 heal_button = pygame.Rect(200, 300, 100, 50)

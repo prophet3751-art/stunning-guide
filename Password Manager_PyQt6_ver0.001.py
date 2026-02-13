@@ -55,6 +55,12 @@ class MainWindow(QMainWindow):
 # создаем выпадающий список:
         self.site_combo = QComboBox()
         self.lable = QLabel("Chose site")
+
+        self.select_lang = QComboBox()
+        self.select_lang.addItem("English")
+        self.select_lang.addItem("Russian")
+        self.select_lang.addItem("Ukraine")
+        self.lable_lang = QLabel("Select Language:")
 # Поле ввода сайта:
         self.site_input = QLineEdit()
         self.site_input.setPlaceholderText("Enter Site")
@@ -103,6 +109,9 @@ class MainWindow(QMainWindow):
 # Выпадающий список:
         main_layout.addWidget(self.lable)
         main_layout.addWidget(self.site_combo)
+
+        inputs_layout.addWidget(self.lable_lang)
+        inputs_layout.addWidget(self.select_lang)
         
         central_widget = QWidget()
         central_widget.setLayout(main_layout)
@@ -183,6 +192,7 @@ class MainWindow(QMainWindow):
         save_passwords()
         self.output.setText(f"Password and Site {site} deleted")
         self.clear_inputs()
+        self.site_update()
 
     def clear_inputs(self):
         self.site_input.clear()

@@ -15,6 +15,7 @@ with open("key.key", "rb") as f:
     key = f.read()
 fernet = fr(key)
 
+from translations import translations
 passwords = {}
 # ====================================================================
 def generate_password(length=12):
@@ -47,31 +48,31 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.current_language = "en"
+        
+
         load_passwords()
 
-        self.setWindowTitle("Password Manager")
+        
         self.setFixedSize(QSize(900,500))
 #                       Виджеты:
 # создаем выпадающий список:
         self.site_combo = QComboBox()
-        self.lable = QLabel("Chose site")
+        self.lable = QLabel("")
 
         self.select_lang = QComboBox()
-        self.select_lang.addItem("English")
-        self.select_lang.addItem("Russian")
-        self.select_lang.addItem("Ukraine")
-        self.lable_lang = QLabel("Select Language:")
+        self.select_lang.addItem("English", "en")
+        self.select_lang.addItem("Русский", "ru")
+        self.select_lang.addItem("Украiнська", "ua")
+        self.lable_lang = QLabel()
 # Поле ввода сайта:
         self.site_input = QLineEdit()
-        self.site_input.setPlaceholderText("Enter Site")
         self.site_input.setStyleSheet("color: lightblue")
 # Поле ввода логина:
         self.login_input = QLineEdit()
-        self.login_input.setPlaceholderText("Enter Login")
         self.login_input.setStyleSheet("color: lightblue")
 # Поле ввода пароля:
         self.password_input = QLineEdit()
-        self.password_input.setPlaceholderText("Enter Password")
         self.password_input.setStyleSheet("color: lightblue")
 # Поле вывода информации:
         self.output = QTextEdit()
@@ -81,12 +82,13 @@ class MainWindow(QMainWindow):
         self.output.setStyleSheet("color: deepskyblue")
         
 # кнопки:
-        self.add_btn = QPushButton("Add info")
-        self.show_btn = QPushButton("Show Password")
-        self.gen_btn = QPushButton("Generate Password")
-        self.del_site = QPushButton("Delete Site")
-        self.searching = QPushButton("Searching site")
-        self.copy_btn = QPushButton("Copy Button")
+        self.add_btn = QPushButton()
+        self.show_btn = QPushButton()
+        self.gen_btn = QPushButton()
+        self.del_site = QPushButton()
+        self.searching = QPushButton()
+        self.copy_btn = QPushButton()
+
 # Layout:
         main_layout = QVBoxLayout() # По вертикали
         buttons_layout = QHBoxLayout() #по горизонтали
@@ -126,13 +128,40 @@ class MainWindow(QMainWindow):
 # Сигналы для выпалающего списка:
         self.site_combo.currentTextChanged.connect(self.on_site_selected)
 
+        self.select_lang.currentIndexChanged.connect(self.change_language)
+
         self.site_update()
+        self.update_text()
 # Методы:
+    def change_language(self):
+        self.current_language = self.select_lang.currentData()
+        self.update_text()
+# ____________________________________________________________
+    def update_text(self):
+    # Для кнопок:
+        self.setWindowTitle(translations[self.current_language]["title"])
+
+        self.add_btn.setText(translations[self.current_language]["add_btn"])
+        self.show_btn.setText(translations[self.current_language]["show_btn"])
+        self.searching.setText(translations[self.current_language]["search_btn"])
+        self.gen_btn.setText(translations[self.current_language]["gen_btn"])
+        self.del_site.setText(translations[self.current_language]["del_btn"])
+        self.copy_btn.setText(translations[self.current_language]["copy_btn"])
+    #  Для полей:
+        self.site_input.setPlaceholderText(translations[self.current_language]["site_input_placeholder"])
+        self.login_input.setPlaceholderText(translations[self.current_language]["login_input_placeholder"])
+        self.password_input.setPlaceholderText(translations[self.current_language]["password_input_placeholder"])
+    # Лейблы:
+        self.lable_lang.setText(translations[self.current_language]["lable_lang"])
+        self.lable.setText(translations[self.current_language]["chose_site_lable"])
+# ____________________________________________________________
     def site_update(self):
+        self.site_combo.blockSignals(True)
         self.site_combo.clear()
         self.site_combo.addItem("Select site")
         for site in passwords:
             self.site_combo.addItem(site)
+            self.site_combo.blockSignals(False)
 # ____________________________________________________________
     def on_site_selected(self, site):
         if site == "Select site":
@@ -191,6 +220,7 @@ class MainWindow(QMainWindow):
         del passwords[site]
         save_passwords()
         self.output.setText(f"Password and Site {site} deleted")
+        
         self.clear_inputs()
         self.site_update()
 
@@ -216,6 +246,8 @@ class MainWindow(QMainWindow):
         passwords[site] = [login, password]
         save_passwords()
         self.output.setText(f"Password for {site} added.")
+
+
         self.clear_inputs()
         self.site_update()
 # ____________________________________________________________

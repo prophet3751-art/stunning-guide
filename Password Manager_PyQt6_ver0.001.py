@@ -58,12 +58,13 @@ class MainWindow(QMainWindow):
 #                       Виджеты:
 # создаем выпадающий список:
         self.site_combo = QComboBox()
-        self.lable = QLabel("")
+        self.lable = QLabel()
 
         self.select_lang = QComboBox()
         self.select_lang.addItem("English", "en")
         self.select_lang.addItem("Русский", "ru")
         self.select_lang.addItem("Украiнська", "ua")
+        self.select_lang.addItem("Polski", "pl")
         self.lable_lang = QLabel()
 # Поле ввода сайта:
         self.site_input = QLineEdit()
@@ -79,7 +80,7 @@ class MainWindow(QMainWindow):
         self.output.setReadOnly(True)
         self.output.setFont(font)
         self.output.setFontItalic(True)
-        self.output.setStyleSheet("color: deepskyblue")
+        self.output.setStyleSheet("color: silver")
         
 # кнопки:
         self.add_btn = QPushButton()
@@ -136,6 +137,7 @@ class MainWindow(QMainWindow):
     def change_language(self):
         self.current_language = self.select_lang.currentData()
         self.update_text()
+        self.site_update()
 # ____________________________________________________________
     def update_text(self):
     # Для кнопок:
@@ -154,17 +156,18 @@ class MainWindow(QMainWindow):
     # Лейблы:
         self.lable_lang.setText(translations[self.current_language]["lable_lang"])
         self.lable.setText(translations[self.current_language]["chose_site_lable"])
+        
 # ____________________________________________________________
     def site_update(self):
         self.site_combo.blockSignals(True)
         self.site_combo.clear()
-        self.site_combo.addItem("Select site")
+        self.site_combo.addItem(translations[self.current_language]["select_site"])
         for site in passwords:
             self.site_combo.addItem(site)
-            self.site_combo.blockSignals(False)
+        self.site_combo.blockSignals(False)
 # ____________________________________________________________
     def on_site_selected(self, site):
-        if site == "Select site":
+        if site == translations[self.current_language]["select_site"]:
             self.clear_inputs() 
             self.output.clear()
             return
@@ -180,15 +183,15 @@ class MainWindow(QMainWindow):
 
 
         if not site:
-            self.output.setText("Enter site first")
+            self.output.setText(translations[self.current_language]["enter site first"])
             return
         
         if site not in passwords:
-            self.output.setText("Site not found")
+            self.output.setText(translations[self.current_language]["site not found"])
             return
         password = passwords[site][1]
         QApplication.clipboard().setText(password)
-        self.output.setText("Password copied to clipboard.")
+        self.output.setText(translations[self.current_language]["password copied to clipboard"])
 # ____________________________________________________________
 
     def search_password(self):
@@ -196,7 +199,7 @@ class MainWindow(QMainWindow):
         self.output.clear()
 
         if not keyword:
-            self.output.setText("Enter site")
+            self.output.setText(translations[self.current_language]["enter site first"])
             return
         
         found = False
@@ -209,17 +212,17 @@ class MainWindow(QMainWindow):
                 self.output.append("-" * 30)
                 found = True
         if not found:
-            self.output.setText("Nothing found")
+            self.output.setText(translations[self.current_language]["nothing found"])
 # ____________________________________________________________
     def delete_password(self):
         site = self.site_input.text().strip().lower()
 
         if site not in passwords:
-            self.output.setText("Nothing found")
+            self.output.setText(translations[self.current_language]["nothing found"])
             return
         del passwords[site]
         save_passwords()
-        self.output.setText(f"Password and Site {site} deleted")
+        self.output.setText(translations[self.current_language]["password_deleted"].format(site= site))
         
         self.clear_inputs()
         self.site_update()
@@ -240,12 +243,12 @@ class MainWindow(QMainWindow):
         password = self.password_input.text().strip()
 
         if not site or not login or not password:
-            self.output.setText("Please fill all fields.")
+            self.output.setText(translations[self.current_language]["please fill all fields"])
             return
     
         passwords[site] = [login, password]
         save_passwords()
-        self.output.setText(f"Password for {site} added.")
+        self.output.setText(translations[self.current_language]["password_added"].format(site= site))
 
 
         self.clear_inputs()
@@ -256,7 +259,7 @@ class MainWindow(QMainWindow):
         self.output.clear()
 
         if not passwords:
-            self.output.setText("Nothing to show")
+            self.output.setText(translations[self.current_language]["nothing to show"])
             return
         
         for site, (login, password) in passwords.items():

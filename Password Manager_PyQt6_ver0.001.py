@@ -89,6 +89,7 @@ class MainWindow(QMainWindow):
         self.del_site = QPushButton()
         self.searching = QPushButton()
         self.copy_btn = QPushButton()
+        self.hide_password_btn = QPushButton()
 
 # Layout:
         main_layout = QVBoxLayout() # По вертикали
@@ -113,9 +114,11 @@ class MainWindow(QMainWindow):
         main_layout.addWidget(self.lable)
         main_layout.addWidget(self.site_combo)
 
+        inputs_layout.addWidget(self.hide_password_btn)
+
         inputs_layout.addWidget(self.lable_lang)
         inputs_layout.addWidget(self.select_lang)
-        
+
         central_widget = QWidget()
         central_widget.setLayout(main_layout)
         self.setCentralWidget(central_widget)
@@ -131,24 +134,35 @@ class MainWindow(QMainWindow):
 
         self.select_lang.currentIndexChanged.connect(self.change_language)
 
+        self.hide_password_btn.clicked.connect(self.toggle_password_visibility)
+
         self.site_update()
         self.update_text()
 # Методы:
+    def toggle_password_visibility(self):
+        if self.password_input.echoMode() == QLineEdit.EchoMode.Password:
+            self.password_input.setEchoMode(QLineEdit.EchoMode.Normal)
+            self.update_text()
+        else:
+            self.password_input.setEchoMode(QLineEdit.EchoMode.Password)
+            self.hide_password_btn.setText(translations[self.current_language]["password_btn_show"])            
+# ____________________________________________________________
     def change_language(self):
         self.current_language = self.select_lang.currentData()
         self.update_text()
         self.site_update()
 # ____________________________________________________________
     def update_text(self):
-    # Для кнопок:
+    
         self.setWindowTitle(translations[self.current_language]["title"])
-
+    # Для кнопок:
         self.add_btn.setText(translations[self.current_language]["add_btn"])
         self.show_btn.setText(translations[self.current_language]["show_btn"])
         self.searching.setText(translations[self.current_language]["search_btn"])
         self.gen_btn.setText(translations[self.current_language]["gen_btn"])
         self.del_site.setText(translations[self.current_language]["del_btn"])
         self.copy_btn.setText(translations[self.current_language]["copy_btn"])
+        self.hide_password_btn.setText(translations[self.current_language]["hide_password"])
     #  Для полей:
         self.site_input.setPlaceholderText(translations[self.current_language]["site_input_placeholder"])
         self.login_input.setPlaceholderText(translations[self.current_language]["login_input_placeholder"])

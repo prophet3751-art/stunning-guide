@@ -25,7 +25,9 @@ translations = {
         "please fill all fields": "Пожалуйста заполните поля",
         "password_added": "Пароль для {site} добавлен",
         "nothing to show": "Ничего нет",
-        "select_site": "Выберите сайт"
+        "select_site": "Кликать тут",
+        "hide_password": "Скрыть пароль",
+        "password_btn_show": "Показать пароль"
         },
     "en": {
         "title": "Password Manager",
@@ -53,7 +55,9 @@ translations = {
         "please fill all fields": "Please fill all fields",
         "password_added": "Password for {site} added",
         "nothing to show": "Nothing to show",
-        "select_site": "Select site"
+        "select_site": "Click right here",
+        "hide_password": "Hide passwort",
+        "password_btn_show": "Show password"
         },
     "ua": {
         "title": "Менеджер паролiв",
@@ -81,7 +85,9 @@ translations = {
         "please fill all fields": "Заповнiть всi поля",
         "password_added": "Пароль для {site} додано",
         "nothing to show": "Нічого немає",
-        "select_site": "Оберіть сайт"
+        "select_site": "Нажми тут",
+        "hide_password": "Заховати пароль",
+        "password_btn_show": "Показати пароль"
         },
     "pl": {
         "title": "Menedżer haseł",
@@ -109,6 +115,8 @@ translations = {
         "please fill all fields": "Proszę wypełnić pola",
         "password_added": "Dodano hasło do {site}",
         "nothing to show": "Nie ma nic",
-        "select_site": "Wybierz stronę"
+        "select_site": "Kliknij tutaj",
+        "hide_password": "Ukryj hasło",
+        "password_btn_show": "Pokaż hasło"
         }
 }

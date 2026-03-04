@@ -56,7 +56,7 @@ translations = {
         "password_added": "Password for {site} added",
         "nothing to show": "Nothing to show",
         "select_site": "Click right here",
-        "hide_password": "Hide passwort",
+        "hide_password": "Hide password",
         "password_btn_show": "Show password"
         },
     "ua": {

@@ -280,7 +280,7 @@ class MainWindow(QMainWindow):
             self.output.append(f"Site:  {site}\n")
             self.output.append(f"Login:  {login}\n")
             self.output.append(f"Password:  {password}")
-            self.output.append("-" * 30)
+            self.output.append("-" * 50)
 # _________________________________________________________________
 # =========================================================================
 app = QApplication(sys.argv)
